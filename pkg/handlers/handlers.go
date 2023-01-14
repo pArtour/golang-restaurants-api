@@ -6,7 +6,7 @@ import (
 )
 
 type Handlers struct {
-	RestaurantHandler *Restaurant
+	RestaurantHandler *RestaurantHandler
 }
 
 func NewHandlers(service *services.Services, app *fiber.App) *Handlers {
