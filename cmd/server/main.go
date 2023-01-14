@@ -1,13 +1,19 @@
 package main
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"github.com/gofiber/fiber/v2"
+	"github.com/pArtour/golang-restaurants-api/pkg/database"
+	"github.com/pArtour/golang-restaurants-api/pkg/handlers"
+	"github.com/pArtour/golang-restaurants-api/pkg/services"
+)
 
 func main() {
 	app := fiber.New()
 
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World!")
-	})
+	db := database.NewDatabase()
+	srv := services.NewServices(db)
+
+	handlers.NewHandlers(srv, app)
 
 	app.Listen(":3000")
 }
