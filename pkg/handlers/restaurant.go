@@ -26,7 +26,7 @@ func NewRestaurantHandler(service *services.RestaurantService, app *fiber.App) *
 func (rh *RestaurantHandler) RegisterRoutes() {
 	rh.app.Get("/restaurants", rh.GetRestaurants)
 	rh.app.Post("/restaurants", rh.CreateRestaurant)
-
+	rh.app.Get("/restaurants/:id", rh.GetRestaurant)
 }
 
 // GetRestaurants returns all restaurants
@@ -41,7 +41,6 @@ func (rh *RestaurantHandler) GetRestaurants(c *fiber.Ctx) error {
 // GetRestaurant returns a restaurant by id
 func (rh *RestaurantHandler) GetRestaurant(c *fiber.Ctx) error {
 	idParam := c.Params("id")
-	// convert idParam to int
 	id, err := strconv.Atoi(idParam)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{

@@ -2,7 +2,6 @@ package services
 
 import (
 	"errors"
-	"fmt"
 	"github.com/pArtour/golang-restaurants-api/pkg/database"
 	"github.com/pArtour/golang-restaurants-api/pkg/models"
 )
@@ -23,10 +22,11 @@ func (rs *RestaurantService) GetRestaurants() []models.Restaurant {
 
 func (rs *RestaurantService) GetRestaurant(id int) (*models.Restaurant, error) {
 	restaurant := new(models.Restaurant)
-	err := rs.db.First(&restaurant, id)
+	err := rs.db.Where("id = ?", id).First(&restaurant).Error
 	if err != nil {
-		return nil, err.Error
+		return nil, err
 	}
+
 	return restaurant, nil
 }
 
@@ -38,8 +38,7 @@ func (rs *RestaurantService) CreateRestaurant(restaurant *models.Restaurant) (*m
 	}
 
 	err = rs.db.Create(&restaurant).Error
-	// print error
-	fmt.Printf("error: %v", err)
+
 	if err != nil {
 		return nil, err
 	}
